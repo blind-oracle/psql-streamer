@@ -1,0 +1,140 @@
+# HTTP interface for stats & health checking
+http = "127.0.0.1:12080"
+
+# Interval between stats logging from sources and sinks
+# Set to 0 to disable
+tickerInterval = "10s"
+
+# Path to a BoltDB containing the parameters used by the service
+# Currently it's only needed for PostgreSQL source an can be omitted if this source isn't used.
+boltdb = "/tmp/psql-streamer.bolt"
+
+[source.db1]
+type = "postgres"
+
+# PostgreSQL connection DSN
+dsn = "dbname=test sslmode=disable"
+
+# Name of the publication in PostgreSQL created with CREATE PUBLICATION
+publication = "pub_test"
+
+# Replication slot represents a unique replication client in the database.
+# PostgreSQL stores the current client WAL positions in the slot (they're updated by the status messages)
+# Be aware that PostgreSQL has a configurable limit on the number of replication slots.
+# Only one client can occupy the replication slot at any given time.
+replicationSlot = "db1"
+
+# How frequently to retry sending to sinks in case of error
+sendRetryInterval = "1s"
+
+# How frequently to try to restart replication if it dies for some reason
+startRetryInterval = "2s"
+
+# How many messages to get from PostgreSQL before pushing them into sinks
+batchSize = 400
+
+# How long to wait for batchSize to fill before flushing the buffer
+batchFlushInterval = "1s"
+
+# PostgreSQL connection timeout
+timeout = "2s"
+
+# If set to something larger than zero - will override the value that is read from BoltDB.
+# The source will ask PostgreSQL to start streaming from this position.
+walPositionOverride = 0
+
+# This affects for how long PostgreSQL retains it's WAL logs.
+# Service will confirm current walPos minus walRetain bytes as flushed-to-disk to PostgreSQL.
+# IMPORTANT: the walRetain should be large enough to accomodate batchSize number of events,
+# or in case of crash you might lose some events (PostgreSQL will not allow to go backwards in log deep enough)
+walRetain = 1048576
+
+# Verbose mode (logs every event - one line)
+verbose = false
+
+# Enable debug
+debug = false
+
+[source.kafka1]
+type = "kafka"
+
+# List of kafka brokers in host:port form
+hosts = [ "kafka1:9092", "kafka2:9092", "kafka3:9092" ]
+
+# List of Kafka topics to fetch events from
+topics = [ "dbItemChanges", "dbAccountChanges" ]
+
+# When running several instances with the same groupID on the same Kafka cluster/topic then
+# the events will be distributed evenly between consumers
+groupID = "bar"
+
+# How frequently to retry sending events to sinks if they fail
+sendRetryInterval = "100ms"
+
+# How many messages to get from Kafka before pushing them into sinks
+# This also sets Kafka library internal queue size
+batchSize = 400
+
+# How long to wait for batchSize to fill before flushing the buffer
+batchFlushInterval = "1s"
+
+# Verbose mode (logs every event - one line)
+verbose = false
+
+# Enable debug mode
+debug = false
+
+[sink.kafka1]
+type = "kafka"
+sources = [ "kafka1" ]
+
+# List of kafka brokers in host:port form
+hosts = [ "kafka1:9092", "kafka2:9092", "kafka3:9092" ]
+
+# A list of handlers to enable (items|passthrough)
+handlers = [ "items" ]
+
+# Mapping between table name of event and Kafka topic
+tableTopicMapping = { action_states = "dbItemChanges", account_actions = "dbAccountChanges" }
+
+# This specifies the topic where the messages for which the mapping wasn't found will go.
+# If it's empty or undefined then they will be discarded.
+# At least one of tableTopicMapping or fallbackTopic should be specified.
+topicFallback = "garbageBin"
+
+# Domain API grpc endpoint (required for *items* handler)
+domain = "qa2-grpc:10000"
+
+# Timeout for Kafka message sending
+timeout = "2s"
+
+# Maximum delivery attempts that Kafka client will do internally
+maxAttempts = 3
+
+# How frequently to poll cluster for partition changes
+rebalanceInterval = "5s"
+
+# -1 : to require all replicas to ACK
+#  0 : no ACKs required
+# >0 : wait for this number of replicas to ACK
+requiredAcks = -1
+
+# Enable asynchronous operation. The Kafka library will use batches to dispatch events more efficiently.
+# Be careful - in this mode you can lose events because Kafka library will not report back the errors
+# and we'll report success to the source as if the message was sent successfully.
+async = false
+
+# Number of messages to buffer in Kafka before sending
+batchSize = 100
+
+# How frequently to flush the queue if batchSize is not yet exceeded.
+# Be advised that this parameter is also used with `async = false` and messages will be sent no faster than 1sec/batchTimeout.
+# Decreasing this parameter leads to more frequent polling of queue which, consequently, increases CPU usage even if idle.
+# With 5ms each sink uses around 10% of one core on a MacBook's 3.3Ghz Core i5 7287U.
+batchTimeout = "10ms"
+
+# Verbose mode (logs every non-skipped event - one line)
+verbose = false
+
+# Enable debug
+debug = false
