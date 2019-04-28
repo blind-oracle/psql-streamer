@@ -17,10 +17,10 @@ import (
 )
 
 var (
-	rel = pgoutput.Relation{ID: 0x2d7cb, Namespace: "public", Name: "test", Replica: 0x64, Columns: []pgoutput.Column{pgoutput.Column{Key: true, Name: "a", Type: 0x17, Mode: 0xffffffff}, pgoutput.Column{Key: false, Name: "b", Type: 0x19, Mode: 0xffffffff}}}
-	ins = pgoutput.Insert{RelationID: 0x2d7cb, New: true, Row: []pgoutput.Tuple{pgoutput.Tuple{Flag: 116, Value: []uint8{0x34, 0x30, 0x30, 0x31, 0x36, 0x36}}, pgoutput.Tuple{Flag: 116, Value: []uint8{0x61}}}}
-	upd = pgoutput.Update{RelationID: 0x2d7cb, Old: false, Key: false, New: true, OldRow: []pgoutput.Tuple(nil), Row: []pgoutput.Tuple{pgoutput.Tuple{Flag: 116, Value: []uint8{0x31, 0x34, 0x34, 0x31, 0x31, 0x30}}, pgoutput.Tuple{Flag: 116, Value: []uint8{0x6c, 0x61, 0x6c, 0x61}}}}
-	del = pgoutput.Delete{RelationID: 0x2d7cb, Key: true, Old: false, Row: []pgoutput.Tuple{pgoutput.Tuple{Flag: 116, Value: []uint8{0x31, 0x34, 0x34, 0x31, 0x31, 0x30}}, pgoutput.Tuple{Flag: 0, Value: []uint8(nil)}}}
+	rel = pgoutput.Relation{ID: 0x2d7cb, Namespace: "public", Name: "test", Replica: 0x64, Columns: []pgoutput.Column{{Key: true, Name: "a", Type: 0x17, Mode: 0xffffffff}, {Key: false, Name: "b", Type: 0x19, Mode: 0xffffffff}}}
+	ins = pgoutput.Insert{RelationID: 0x2d7cb, New: true, Row: []pgoutput.Tuple{{Flag: 116, Value: []uint8{0x34, 0x30, 0x30, 0x31, 0x36, 0x36}}, {Flag: 116, Value: []uint8{0x61}}}}
+	upd = pgoutput.Update{RelationID: 0x2d7cb, Old: false, Key: false, New: true, OldRow: []pgoutput.Tuple(nil), Row: []pgoutput.Tuple{{Flag: 116, Value: []uint8{0x31, 0x34, 0x34, 0x31, 0x31, 0x30}}, {Flag: 116, Value: []uint8{0x6c, 0x61, 0x6c, 0x61}}}}
+	del = pgoutput.Delete{RelationID: 0x2d7cb, Key: true, Old: false, Row: []pgoutput.Tuple{{Flag: 116, Value: []uint8{0x31, 0x34, 0x34, 0x31, 0x31, 0x30}}, {Flag: 0, Value: []uint8(nil)}}}
 	beg = pgoutput.Begin{LSN: 0x192d1188, XID: 102693}
 )
 
