@@ -16,7 +16,7 @@ type = "postgres"
 dsn = "dbname=test sslmode=disable"
 
 # Name of the publication in PostgreSQL created with CREATE PUBLICATION
-publication = "pub_test"
+publication = "pub1"
 
 # Replication slot represents a unique replication client in the database.
 # PostgreSQL stores the current client WAL positions in the slot (they're updated by the status messages)
@@ -62,7 +62,7 @@ type = "kafka"
 hosts = [ "kafka1:9092", "kafka2:9092", "kafka3:9092" ]
 
 # List of Kafka topics to fetch events from
-topics = [ "dbItemChanges", "dbAccountChanges" ]
+topics = [ "topic1", "topic2" ]
 
 # When running several instances with the same groupID on the same Kafka cluster/topic then
 # the events will be distributed evenly between consumers
@@ -91,19 +91,16 @@ sources = [ "kafka1" ]
 # List of kafka brokers in host:port form
 hosts = [ "kafka1:9092", "kafka2:9092", "kafka3:9092" ]
 
-# A list of handlers to enable (items|passthrough)
-handlers = [ "items" ]
+# A list of handlers to enable
+handlers = [ "passthrough" ]
 
 # Mapping between table name of event and Kafka topic
-tableTopicMapping = { action_states = "dbItemChanges", account_actions = "dbAccountChanges" }
+tableTopicMapping = { table1 = "topic1", table2 = "topic2" }
 
 # This specifies the topic where the messages for which the mapping wasn't found will go.
 # If it's empty or undefined then they will be discarded.
 # At least one of tableTopicMapping or fallbackTopic should be specified.
 topicFallback = "garbageBin"
-
-# Domain API grpc endpoint (required for *items* handler)
-domain = "qa2-grpc:10000"
 
 # Timeout for Kafka message sending
 timeout = "2s"
@@ -124,7 +121,7 @@ requiredAcks = -1
 # and we'll report success to the source as if the message was sent successfully.
 async = false
 
-# Number of messages to buffer in Kafka before sending
+# Number of messages to buffer before sending to Kafka
 batchSize = 100
 
 # How frequently to flush the queue if batchSize is not yet exceeded.
