@@ -142,10 +142,10 @@
   revision = "87a4384529e0652f5035fb5cc8095faf73ea9b0b"
 
 [[projects]]
+  branch = "master"
   name = "github.com/satori/go.uuid"
   packages = ["."]
-  revision = "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3"
-  version = "v1.2.0"
+  revision = "b2ce2384e17bbe0c6d34077efa39dbab3e09123b"
 
 [[projects]]
   name = "github.com/segmentio/kafka-go"
@@ -288,6 +288,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "4de771f2dfe78de4a1b117957d912ac697e1320cf510d4ca56fe9f3dfb22dd51"
+  inputs-digest = "6eab6cf6e9209e62801aca077954462eaeba35737ce59a644f58e41b7782426a"
   solver-name = "gps-cdcl"
   solver-version = 1
