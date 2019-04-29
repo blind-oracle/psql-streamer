@@ -197,7 +197,7 @@ func (k *Kfk) fetch(r *reader) {
 }
 
 func (k *Kfk) commit(r *reader, m ...kafka.Message) {
-	k.Debugf("Commiting %d messages to topic %s", len(m), r.topic)
+	k.Debugf("Committing %d messages to topic %s", len(m), r.topic)
 
 	t := time.Now()
 	// Try to commit indefinitely until success
@@ -217,7 +217,7 @@ func (k *Kfk) commit(r *reader, m ...kafka.Message) {
 		k.Errorf("Unable to commit messages: %s", err)
 	}
 
-	k.Debugf("%d messages commited to Kafka in %.4f sec", len(m), time.Since(t).Seconds())
+	k.Debugf("%d messages committed to Kafka in %.4f sec", len(m), time.Since(t).Seconds())
 }
 
 func (k *Kfk) setError(err error) {

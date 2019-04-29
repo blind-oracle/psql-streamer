@@ -58,6 +58,22 @@ All requests are GET.
 ## Configuration
 See *psql-streamer.toml* for detailed instructions.
 
+## Build
+**psql-streamer** is written in Go and uses Dep as a dependency manager, so you need to install them first.
+
+Then:
+```bash
+# dep ensure
+# go build
+```
+
+## Run
+```bash
+# /path/to/psql-streamer -config /etc/psql-streamer.toml
+```
+
+The logging currently goes to stdout/stderr.
+
 ## Event structure
 ```json
 {

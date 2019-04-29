@@ -31,9 +31,9 @@ func (k *Stub) ProcessEventsBatch(events []event.Event) (err error) {
 
 	if k.f != nil {
 		return k.f(events)
-	} else {
-		return nil
 	}
+
+	return
 }
 
 // Name returns Sink's name

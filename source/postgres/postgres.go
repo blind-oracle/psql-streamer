@@ -128,7 +128,7 @@ func New(name string, v *viper.Viper) (s *PSQL, err error) {
 		return nil, fmt.Errorf("Unable to init Bolt bucket: %s", err)
 	}
 
-	// Check if we have a WAL position overriden from the config file
+	// Check if we have a WAL position overridden from the config file
 	if s.cfg.walPositionOverride == 0 {
 		// Read WAL position if it's there
 		if s.cfg.walPositionOverride, err = s.boltDB.CounterGet(s.boltBucket, db.CounterWALPos); err != nil {

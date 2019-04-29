@@ -45,7 +45,7 @@ func TestCache(t *testing.T) {
 	})
 	assert.Nil(t, err)
 
-	c, err = db.CounterGet("test", CounterWALPos)
+	_, err = db.CounterGet("test", CounterWALPos)
 	assert.NotNil(t, err)
 
 	err = db.Close()

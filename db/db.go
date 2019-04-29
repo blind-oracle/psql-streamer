@@ -33,11 +33,12 @@ func GetHandleFromViper(v *viper.Viper) (*DB, error) {
 		return nil, fmt.Errorf("No key by name %s found in Viper", keyName)
 	}
 
-	if db, ok := val.(*DB); !ok {
+	db, ok := val.(*DB)
+	if !ok {
 		return nil, fmt.Errorf("Key value is not a pointer to DB but %T", val)
-	} else {
-		return db, nil
 	}
+
+	return db, nil
 }
 
 // SetHandleInViper sets a handle in Viper
