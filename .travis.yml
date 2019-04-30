@@ -6,5 +6,5 @@ go:
 before_install:
   - go get github.com/mattn/goveralls
 script:
-  - go test -v ./... -coverprofile=psql-streamer.coverprofile
+  - go test ./... -coverprofile=psql-streamer.coverprofile
   - $GOPATH/bin/goveralls -service=travis-ci -coverprofile psql-streamer.coverprofile

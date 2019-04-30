@@ -19,12 +19,12 @@ dsn = "dbname=test sslmode=disable"
 publication = "pub1"
 
 # Replication slot represents a unique replication client in the database.
-# PostgreSQL stores the current client WAL positions in the slot (they're updated by the status messages)
+# PostgreSQL stores the current client WAL positions in the slot (they're updated by the status messages from the client)
 # Be aware that PostgreSQL has a configurable limit on the number of replication slots.
 # Only one client can occupy the replication slot at any given time.
 replicationSlot = "db1"
 
-# How frequently to retry sending to sinks in case of error
+# How frequently to retry sending to sinks in case of an error
 sendRetryInterval = "1s"
 
 # How frequently to try to restart replication if it dies for some reason
@@ -33,7 +33,7 @@ startRetryInterval = "2s"
 # How many messages to get from PostgreSQL before pushing them into sinks
 batchSize = 400
 
-# How long to wait for batchSize to fill before flushing the buffer
+# How long to wait for the batchSize to fill before flushing the buffer
 batchFlushInterval = "1s"
 
 # PostgreSQL connection timeout
@@ -43,7 +43,7 @@ timeout = "2s"
 # The source will ask PostgreSQL to start streaming from this position.
 walPositionOverride = 0
 
-# This affects for how long PostgreSQL retains it's WAL logs.
+# This affects for how long PostgreSQL will retain it's WAL logs.
 # Service will confirm current walPos minus walRetain bytes as flushed-to-disk to PostgreSQL.
 # IMPORTANT: the walRetain should be large enough to accomodate batchSize number of events,
 # or in case of crash you might lose some events (PostgreSQL will not allow to go backwards in log deep enough)
@@ -68,10 +68,10 @@ topics = [ "topic1", "topic2" ]
 # the events will be distributed evenly between consumers
 groupID = "bar"
 
-# How frequently to retry sending events to sinks if they fail
+# How frequently to retry sending events to sinks in case of failure
 sendRetryInterval = "100ms"
 
-# How many messages to get from Kafka before pushing them into sinks
+# How many messages to get from Kafka before pushing them into sinks.
 # This also sets Kafka library internal queue size
 batchSize = 400
 
@@ -91,7 +91,7 @@ sources = [ "kafka1" ]
 # List of kafka brokers in host:port form
 hosts = [ "kafka1:9092", "kafka2:9092", "kafka3:9092" ]
 
-# A list of handlers to enable
+# A list of handlers to enable (currently only "passthrough" is available)
 handlers = [ "passthrough" ]
 
 # Mapping between table name of event and Kafka topic
@@ -99,7 +99,7 @@ tableTopicMapping = { table1 = "topic1", table2 = "topic2" }
 
 # This specifies the topic where the messages for which the mapping wasn't found will go.
 # If it's empty or undefined then they will be discarded.
-# At least one of tableTopicMapping or fallbackTopic should be specified.
+# At least one of 'tableTopicMapping' or 'fallbackTopic' should be specified.
 topicFallback = "garbageBin"
 
 # Timeout for Kafka message sending
@@ -118,15 +118,15 @@ requiredAcks = -1
 
 # Enable asynchronous operation. The Kafka library will use batches to dispatch events more efficiently.
 # Be careful - in this mode you can lose events because Kafka library will not report back the errors
-# and we'll report success to the source as if the message was sent successfully.
+# and we'll always report success to the source as if the messages were sent successfully.
 async = false
 
 # Number of messages to buffer before sending to Kafka
 batchSize = 100
 
 # How frequently to flush the queue if batchSize is not yet exceeded.
-# Be advised that this parameter is also used with `async = false` and messages will be sent no faster than 1sec/batchTimeout.
-# Decreasing this parameter leads to more frequent polling of queue which, consequently, increases CPU usage even if idle.
+# Be advised that this parameter is also used with 'async = false' and messages will be sent no faster than 1sec/batchTimeout.
+# Decreasing this parameter leads to more frequent polling of queue which increases CPU usage even when idle.
 # With 5ms each sink uses around 10% of one core on a MacBook's 3.3Ghz Core i5 7287U.
 batchTimeout = "10ms"
 
