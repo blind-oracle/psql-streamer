@@ -1,10 +1,11 @@
 language: go
 
-sudo: false
 go:
   - 1.x
+
 before_install:
   - go get github.com/mattn/goveralls
+
 script:
   - go test ./... -coverprofile=psql-streamer.coverprofile
   - $GOPATH/bin/goveralls -service=travis-ci -coverprofile psql-streamer.coverprofile

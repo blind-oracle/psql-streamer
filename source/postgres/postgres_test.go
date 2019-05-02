@@ -7,13 +7,13 @@ import (
 	"time"
 
 	"github.com/blind-oracle/psql-streamer/mux"
+	"github.com/stretchr/testify/assert"
 
 	"github.com/blind-oracle/pgoutput"
 	"github.com/blind-oracle/psql-streamer/common"
 	"github.com/blind-oracle/psql-streamer/event"
 	"github.com/blind-oracle/psql-streamer/sink"
 	"github.com/blind-oracle/psql-streamer/sink/stub"
-	"github.com/stretchr/testify/assert"
 )
 
 var (

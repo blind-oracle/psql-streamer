@@ -71,7 +71,6 @@ func New(name string, v *viper.Viper) (s *Kfk, err error) {
 		Balancer:          &kafka.Hash{},
 		Dialer:            &kafka.Dialer{Timeout: v.GetDuration("timeout")},
 		Brokers:           v.GetStringSlice("hosts"),
-		Topic:             v.GetString("topic"),
 		BatchTimeout:      v.GetDuration("batchTimeout"),
 		BatchSize:         v.GetInt("batchSize"),
 		RequiredAcks:      v.GetInt("requiredAcks"),
