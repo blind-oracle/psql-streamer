@@ -5,7 +5,7 @@ import (
 
 	"github.com/blind-oracle/psql-streamer/common"
 	"github.com/blind-oracle/psql-streamer/sink"
-	"github.com/blind-oracle/psql-streamer/source/kafka"
+	kafkasrc "github.com/blind-oracle/psql-streamer/source/kafka"
 	"github.com/blind-oracle/psql-streamer/source/postgres"
 	"github.com/spf13/viper"
 )

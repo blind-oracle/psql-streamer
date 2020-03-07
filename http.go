@@ -12,9 +12,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
-var (
-	httpServer *http.Server
-)
+var httpServer *http.Server
 
 func httpInit() {
 	r := http.NewServeMux()

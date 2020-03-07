@@ -1,0 +1,14 @@
+[Unit]
+Description=Service for streaming PostgreSQL events
+Documentation=https://github.com/blind-oracle/psql-streamer
+After=network.target
+
+[Service]
+Type=simple
+PermissionsStartOnly=true
+ExecStart=/usr/bin/psql-streamer -config /etc/psql-streamer/psql-streamer.toml
+Restart=on-failure
+KillMode=control-group
+
+[Install]
+WantedBy=multi-user.target

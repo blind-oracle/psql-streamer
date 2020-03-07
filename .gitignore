@@ -2,3 +2,5 @@ psql-streamer
 psql-streamer.exe
 vendor*
 *.coverprofile
+*.rpm
+*.deb

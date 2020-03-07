@@ -58,9 +58,9 @@ func BenchmarkSet(b *testing.B) {
 	os.Remove(testDB)
 
 	db, _ := New(testDB)
-	db.BucketInit("test")
+	_ = db.BucketInit("test")
 	for i := 0; i < b.N; i++ {
-		db.CounterSet("test", CounterWALPos, 0xDEADBEEF)
+		_ = db.CounterSet("test", CounterWALPos, 0xDEADBEEF)
 	}
 
 	db.Close()
@@ -72,9 +72,9 @@ func BenchmarkGet(b *testing.B) {
 	os.Remove(testDB)
 
 	db, _ := New(testDB)
-	db.BucketInit("test")
+	_ = db.BucketInit("test")
 	for i := 0; i < b.N; i++ {
-		db.CounterGet("test", CounterWALPos)
+		_, _ = db.CounterGet("test", CounterWALPos)
 	}
 
 	db.Close()
