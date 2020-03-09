@@ -6,6 +6,5 @@ exclude_patterns = [
     "*.service",
     "*.yml",
     "*.yaml",
-    "*.toml",
-    "Makefile"
+    "*.toml"
 ]
