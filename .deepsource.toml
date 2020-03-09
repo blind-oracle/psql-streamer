@@ -1,0 +1,11 @@
+version = 1
+
+test_patterns = ["*_test.go"]
+
+exclude_patterns = [
+    "*.service",
+    "*.yml",
+    "*.yaml",
+    "*.toml",
+    "Makefile"
+]
