@@ -10,4 +10,4 @@ name = "go"
 enabled = true
 
   [analyzers.meta]
-  import_path = "github.com/blind-oracle/dnstap-bgp"
+  import_path = "github.com/blind-oracle/psql-streamer"
